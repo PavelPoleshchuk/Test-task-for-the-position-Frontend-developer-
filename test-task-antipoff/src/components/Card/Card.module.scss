@@ -1,0 +1,21 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 263px;
+  width: 305px;
+  border-radius: 15px;
+  box-shadow: 3px 3px 8px 0px rgba(34, 60, 80, 0.2);
+  img {
+    height: 124px;
+    width: 124px;
+    border-radius: 50%;
+  }
+  svg{
+    width: 124px;
+    height: 124px;
+    opacity: 0.3;
+  }
+  
+}

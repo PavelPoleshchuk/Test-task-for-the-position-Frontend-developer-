@@ -1,0 +1,32 @@
+@import "../../scss/variables";
+
+.header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 265px;
+  background-color: $header-background;
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 846px;
+    min-height: 137px;
+    h1 {
+      color: white;
+    }
+    p {
+      color: white;
+    }
+  }
+  :global {
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

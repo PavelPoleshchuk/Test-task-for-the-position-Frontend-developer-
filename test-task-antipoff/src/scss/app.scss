@@ -1,0 +1,27 @@
+@import "variables";
+@import "normalize";
+@import "button";
+
+body {
+  background-color: $body-background;
+}
+
+.wrapper {
+  width: calc(100vw - 100px);
+  min-height: 90vh;
+  background-color: $content-background;
+  margin: 50px auto;
+  border-radius: 10px;
+  max-width: 1440px;
+}
+
+.container {
+  width: $container-width;
+  margin: 0 auto;
+}
+.cards__blok {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
