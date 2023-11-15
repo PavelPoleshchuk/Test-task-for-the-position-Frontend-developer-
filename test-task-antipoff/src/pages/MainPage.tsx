@@ -3,73 +3,45 @@ import Pagination from "../components/Pagination";
 import CardsBlock from "../components/CardsBlock";
 import SkeletonsBlock from "../components/CardsBlock/SkeletonsBlock";
 import Header from "../components/Header";
-
-export interface IUser {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  avatar: string;
-}
-
-export interface IFetchData {
-  page: number;
-  per_page: number;
-  total: number;
-  total_pages: number;
-  data: IUser[];
-}
+import { useDispatch, useSelector } from "react-redux";
+import { setFetchData } from "../redux/sliceFetch";
+import { RootState } from "../redux/store";
 
 export default function MainPage() {
-  const BASE_URL = "https://reqres.in/api/users?";
-
-  const [selectedPage, setSelectedPage] = React.useState(1);
-  const [fetchData, setFetchData] = React.useState<IFetchData | null>(null);
-  const [fetchError, setFetchError] = React.useState(false);
+  const dispatch = useDispatch();
+  const selectedPage = useSelector(
+    (state: RootState) => state.selectedPage.page
+  );
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
+    const BASE_URL = "https://reqres.in/api/users?";
     setIsLoading(true);
     fetch(`${BASE_URL}page=${selectedPage}`)
       .then((res) => {
         if (res.status != 200) {
-          setFetchError(true);
+          alert(`Response status: ${res.status}`);
         } else return res.json();
       })
       .then((data) =>
         setTimeout(() => {
-          setFetchData(data);
+          dispatch(setFetchData(data));
           setIsLoading(false);
         }, 1000)
       )
       .catch((error) => console.log(error.message));
-  }, [selectedPage]);
+  }, [dispatch, selectedPage]);
+
   return (
     <div className="wrapper">
       <Header />
       <div className="container">
         <div className="cards__blok">
-          {!isLoading && <CardsBlock fetchData={fetchData} />}
+          {!isLoading && <CardsBlock />}
           {isLoading && <SkeletonsBlock />}
         </div>
-        <Pagination setSelectedPage={setSelectedPage} fetchData={fetchData} />
+        <Pagination />
       </div>
     </div>
   );
 }
-
-//  {
-//   page: 1,
-//   per_page: 4,
-//   total: 0,
-//   total_pages: 0,
-//   data: [
-//     {
-//       id: 0,
-//       email: "string",
-//       first_name: "string",
-//       last_name: "string",
-//       avatar: "string",
-//     },
-//   ],
-// };

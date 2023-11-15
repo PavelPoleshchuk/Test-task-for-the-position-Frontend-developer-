@@ -1,13 +1,12 @@
 import Card from "../Card";
-import { IFetchData } from "../../pages/MainPage";
-interface IProps {
-  fetchData: IFetchData | null;
-}
-export default function CardsBlock({ fetchData }: IProps) {
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+
+export default function CardsBlock() {
+  const fetchData = useSelector((state: RootState) => state.fetchData.data)
   return (
     <>
-      {fetchData?.data &&
-        fetchData.data.map((user) => <Card key={user.id} user={user} />)}
+      {fetchData.data.map((user) => <Card key={user.id} user={user} />)}
     </>
   );
 }

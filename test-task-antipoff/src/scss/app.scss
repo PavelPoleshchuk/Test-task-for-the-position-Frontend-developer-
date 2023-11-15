@@ -14,6 +14,11 @@ body {
   border-radius: 10px;
   max-width: 1440px;
 }
+.center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .container {
   width: $container-width;
@@ -24,4 +29,7 @@ body {
   justify-content: center;
   flex-wrap: wrap;
   gap: 15px;
+}
+.border--red {
+  border: 2px solid red;
 }

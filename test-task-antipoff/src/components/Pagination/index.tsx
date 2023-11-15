@@ -1,28 +1,23 @@
-import React from "react";
 import ReactPaginate from "react-paginate";
-
 import styles from "./Pagination.module.scss";
-import { IFetchData } from "../../pages/MainPage";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { setSelectedPage } from "../../redux/sliceSelectedPage";
 
+export default function Pagination() {
+  const fetchData = useSelector((state: RootState) => state.fetchData.data);
+  const dispatch = useDispatch();
 
-export interface IProps {
-  setSelectedPage: React.Dispatch<React.SetStateAction<number>>;
-  fetchData: IFetchData | null;
-}
-export default function Pagination({ setSelectedPage, fetchData }: IProps) {
-  if (fetchData == null) {
-    return;
-  } else
-    return (
-      <ReactPaginate
-        className={styles.root}
-        breakLabel="..."
-        nextLabel=">"
-        onPageChange={(e) => setSelectedPage(e.selected + 1)}
-        pageRangeDisplayed={fetchData.per_page}
-        pageCount={fetchData.total_pages}
-        previousLabel="<"
-        renderOnZeroPageCount={null}
-      />
-    );
+  return (
+    <ReactPaginate
+      className={styles.root}
+      breakLabel="..."
+      nextLabel=">"
+      onPageChange={(e) => dispatch(setSelectedPage(e.selected + 1))}
+      pageRangeDisplayed={fetchData.per_page}
+      pageCount={fetchData.total_pages}
+      previousLabel="<"
+      renderOnZeroPageCount={null}
+    />
+  );
 }

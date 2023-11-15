@@ -1,7 +1,6 @@
-import React from "react";
 import styles from "./Card.module.scss";
-import { IUser } from "../../pages/MainPage";
 import { Link } from "react-router-dom";
+import { IUser } from "../../types/typed";
 
 interface IProps {
   user: IUser;

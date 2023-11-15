@@ -1,8 +1,6 @@
-import React from "react";
 import styles from "./HeaderCard.module.scss";
-import { IUser } from "../../pages/MainPage";
-import Button from "../Button";
 import { Link } from "react-router-dom";
+import { IUser } from "../../types/typed";
 interface IProps {
   user: IUser;
 }
