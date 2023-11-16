@@ -1,10 +1,9 @@
-import React from 'react'
-import Header from '../components/Header'
+import NotFound from '../components/NotFound'
 
-export default function NotFound() {
+export default function NotFoundPage() {
+  
   return (
     <div className="wrapper">
-      <Header />
       <div className="container"></div>
     <div>
       <NotFound/>

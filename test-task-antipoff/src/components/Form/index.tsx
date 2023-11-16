@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import styles from "./Form.module.scss";
 import { useDispatch } from "react-redux";
 import { setFormValues } from "../../redux/sliceForm";
-import { fetchPostToken } from "../../tools/fetchPostToken";
+import { getToken, setToken } from "../../tools/useToken";
+import { setTokenInStorage } from "../../redux/sliceToken";
 
 export type FormValues = {
   name: string;
@@ -27,6 +28,7 @@ const patternMinMax = {
 export const Form = () => {
   const [passwordMatched, setPasswordMatched] = useState(false);
   const dispatch = useDispatch();
+
   const {
     register,
     formState: { errors },
@@ -40,12 +42,37 @@ export const Form = () => {
       setTimeout(() => {
         setPasswordMatched(false);
       }, 3000);
-      return;
     } else {
-      console.log(data);
+      console.log("Form data=", data);
       dispatch(setFormValues(data));
-      fetchPostToken(data.email, data.password1);
-      reset();
+
+      const fetchToken = (email: string, password: string) => {
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        };
+        fetch("https://reqres.in/api/register", requestOptions)
+          .then((res) => {
+            if (res.status != 200) {
+              alert(`Response status in function 'fetchToken': ${res.status} ВНИМАНИЕ!!! В проекте использыется учебный сервер. Возврат токена возможен только для определенных пользователей. Для успешного получения токена введите следующие данные: email: eve.holt@reqres.in 
+              password: pistol`);
+            } else return res.json();
+          })
+          .then((data) => {
+            console.log("Токен полученный из fetchToken= ", data);
+            if (data.token) {
+              setToken(data.token);
+              dispatch(setTokenInStorage(true));
+              reset();
+            }
+          });
+      };
+      fetchToken(data.email, data.password1);
+      console.log("getToken()?.value=", getToken()?.value);
     }
   };
 
@@ -63,7 +90,7 @@ export const Form = () => {
               {...register("name", {
                 ...patternMinMax,
                 pattern: {
-                  value: /[A-Z]{1}/,
+                  value: /[A-Z]{1}|[А-Я]{1}/,
                   message: "Первая букава должна быть заглавная",
                 },
               })}

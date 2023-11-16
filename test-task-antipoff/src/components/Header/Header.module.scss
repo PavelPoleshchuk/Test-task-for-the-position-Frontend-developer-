@@ -17,9 +17,15 @@
     min-height: 137px;
     h1 {
       color: white;
+      @media (max-width: 420px) {
+        font-size: 28px;
+      }
     }
     p {
       color: white;
+      @media (max-width: 768px) {
+        font-size: 15px;
+      }
     }
   }
   :global {

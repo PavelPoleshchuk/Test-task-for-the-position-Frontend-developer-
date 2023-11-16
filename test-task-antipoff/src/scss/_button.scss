@@ -33,5 +33,9 @@
     position: absolute;
     right: 80px;
     top: 32px;
+    @media (max-width: 420px) {
+      right: 25px;
+      top: 15px;
+    }
   }
 }

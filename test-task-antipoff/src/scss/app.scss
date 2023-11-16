@@ -8,9 +8,9 @@ body {
 
 .wrapper {
   width: calc(100vw - 100px);
-  min-height: 90vh;
+  // min-height: 90vh;
   background-color: $content-background;
-  margin: 50px auto;
+  margin: 20px auto;
   border-radius: 10px;
   max-width: 1440px;
 }
@@ -29,6 +29,8 @@ body {
   justify-content: center;
   flex-wrap: wrap;
   gap: 15px;
+  min-height: 65vh;
+  padding: 15px 0px;
 }
 .border--red {
   border: 2px solid red;

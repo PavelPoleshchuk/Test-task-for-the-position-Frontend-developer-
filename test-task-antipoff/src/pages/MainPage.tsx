@@ -4,17 +4,28 @@ import CardsBlock from "../components/CardsBlock";
 import SkeletonsBlock from "../components/CardsBlock/SkeletonsBlock";
 import Header from "../components/Header";
 import { useDispatch, useSelector } from "react-redux";
-import { setFetchData } from "../redux/sliceFetch";
 import { RootState } from "../redux/store";
+import { Form } from "../components/Form";
+import { getToken } from "../tools/useToken";
+import { setTokenInStorage } from "../redux/sliceToken";
+import { setFetchData } from "../redux/sliceFetch";
 
 export default function MainPage() {
   const dispatch = useDispatch();
+  const tokenInStorage = useSelector(
+    (state: RootState) => state.tokenAndForm.tokenInStorage
+  );
   const selectedPage = useSelector(
     (state: RootState) => state.selectedPage.page
   );
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
+    const item = getToken();
+    if (item) {
+      dispatch(setTokenInStorage(true));
+    } else dispatch(setTokenInStorage(false));
+
     const BASE_URL = "https://reqres.in/api/users?";
     setIsLoading(true);
     fetch(`${BASE_URL}page=${selectedPage}`)
@@ -37,8 +48,9 @@ export default function MainPage() {
       <Header />
       <div className="container">
         <div className="cards__blok">
-          {!isLoading && <CardsBlock />}
-          {isLoading && <SkeletonsBlock />}
+          {!tokenInStorage && <Form />}
+          {tokenInStorage && !isLoading && <CardsBlock />}
+          {tokenInStorage && isLoading && <SkeletonsBlock />}
         </div>
         <Pagination />
       </div>

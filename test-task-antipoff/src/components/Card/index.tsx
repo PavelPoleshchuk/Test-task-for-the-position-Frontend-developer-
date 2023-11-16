@@ -7,7 +7,7 @@ interface IProps {
 }
 export default function Card({ user }: IProps) {
   return (
-    <Link to={`/${user.id}`} className={styles.card}>
+    <Link to={`/card/${user.id}`} className={styles.card}>
       <img src={user.avatar} alt={user.last_name} />
       <p>{user.first_name + " " + user.last_name}</p>
     </Link>
