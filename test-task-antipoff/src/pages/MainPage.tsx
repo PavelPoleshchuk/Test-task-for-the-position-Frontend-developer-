@@ -8,7 +8,7 @@ import { RootState } from "../redux/store";
 import { Form } from "../components/Form";
 import { getToken } from "../tools/useToken";
 import { setTokenInStorage } from "../redux/sliceToken";
-import { setFetchData } from "../redux/sliceFetch";
+import { fetchMainData } from "../tools/fetchMainData";
 
 export default function MainPage() {
   const dispatch = useDispatch();
@@ -27,20 +27,7 @@ export default function MainPage() {
     } else dispatch(setTokenInStorage(false));
 
     const BASE_URL = "https://reqres.in/api/users?";
-    setIsLoading(true);
-    fetch(`${BASE_URL}page=${selectedPage}`)
-      .then((res) => {
-        if (res.status != 200) {
-          alert(`Response status: ${res.status}`);
-        } else return res.json();
-      })
-      .then((data) =>
-        setTimeout(() => {
-          dispatch(setFetchData(data));
-          setIsLoading(false);
-        }, 1000)
-      )
-      .catch((error) => console.log(error.message));
+    fetchMainData(BASE_URL, setIsLoading, selectedPage);
   }, [dispatch, selectedPage]);
 
   return (
@@ -52,7 +39,7 @@ export default function MainPage() {
           {tokenInStorage && !isLoading && <CardsBlock />}
           {tokenInStorage && isLoading && <SkeletonsBlock />}
         </div>
-        <Pagination />
+        {tokenInStorage && <Pagination />}
       </div>
     </div>
   );

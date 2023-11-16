@@ -1,3 +1,5 @@
+import { setTokenInStorage } from "../redux/sliceToken";
+import { store } from "../redux/store";
 
 export type StoredToken = {
   value: string;
@@ -39,6 +41,28 @@ const getToken = (): StoredToken | null => {
   return result;
 };
 
+const fetchToken = (email: string, password: string, reset:()=>void) => {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  };
+  fetch("https://reqres.in/api/register", requestOptions)
+    .then((res) => {
+      if (res.status != 200) {
+        alert(`Response status in function 'fetchToken': ${res.status} ВНИМАНИЕ!!! В проекте использыется учебный сервер. Возврат токена возможен только для определенных пользователей. Для успешного получения токена используйте E-mail: eve.holt@reqres.in`);
+      } else return res.json();
+    })
+    .then((data) => {
+      if (data.token) {
+        setToken(data.token);
+        store.dispatch(setTokenInStorage(true));
+        reset();
+      }
+    });
+};
 
-
-export { getToken, setToken, removeToken, isExpired };
+export { getToken, setToken, removeToken, isExpired, fetchToken };

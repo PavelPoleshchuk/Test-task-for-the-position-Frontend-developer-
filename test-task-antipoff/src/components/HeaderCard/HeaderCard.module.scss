@@ -7,9 +7,16 @@
   align-items: center;
   height: 265px;
   background-color: $header-background;
+  @media (max-width: 870px) {
+    flex-direction: column-reverse;
+  }
+
   img {
     margin-left: 20%;
     border-radius: 50%;
+    @media (max-width: 870px) {
+      margin: 10px 0 0 0;
+    }
   }
 
   .text {
@@ -21,10 +28,18 @@
     .text__name {
       font-size: 64px;
       line-height: 75px;
+      @media (max-width: 870px) {
+        font-size: 32px;
+        line-height: 32px;
+      }
     }
     .text__job {
       font-size: 32px;
       line-height: 38px;
+      @media (max-width: 870px) {
+        font-size: 24px;
+        line-height: 24px;
+      }
     }
   }
 
@@ -32,6 +47,31 @@
     .container {
       display: flex;
       align-items: center;
+      @media (max-width: 870px) {
+        flex-direction: column-reverse;
+      }
+    }
+
+    .button__left {
+      @media (max-width: 869px) {
+        left: 10px;
+        min-width: 25px;
+        padding: 1px 1px;
+      }
+      svg {
+        fill: white;
+        margin-bottom: -5px;
+        @media (min-width: 869px) {
+          display: none;
+        }
+      }
+      span {
+        font-size: 16px;
+        color: #fff;
+        @media (max-width: 870px) {
+          display: none;
+        }
+      }
     }
   }
 }
